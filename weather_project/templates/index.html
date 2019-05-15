@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>WHAT'S THE WEATHER LIKE?</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    {% load crispy_forms_tags %}
+</head>
+<body>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+        {% endif %}
+    <nav class="navbar navbar-expand-sm bg-secondary navbar-light">    
+        <h1 class="title">
+            What's the weather like?</h1>
+    </nav><br>
+<form class="form-inline" method="POST">
+    <div class="container">
+        {% csrf_token %}        
+        {{ form.name }}
+        <button class="btn btn-primary" type="submit">Add City</button><br>
+    </div>
+    
+    {% for weather in weather_data %}
+        <div class="container">            
+            <div class="row">
+                <div class=col-sm-1>                    
+                    <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png"  alt="image">                   
+                </div>            
+                <div class="col-sm-1">                
+                    <p>
+                        <strong>{{ weather.city }}</strong>
+                        <br>
+                        {{ weather.temperature }}° F
+                        <br> {{ weather.description }}
+                    </p>                
+                </div>
+            </div>           
+        </div>
+    {% endfor %} 
+       
+</form>
+</body>
+</html>
